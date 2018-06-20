@@ -128,5 +128,36 @@ if ($genre3NumRows < 1) {
 	}
 }
 
+$descriptionResults = mysqli_query($mysqli, "SELECT * FROM sfx WHERE description LIKE '%$searchText%';");
+$descriptionNumRows = mysqli_num_rows($descriptionResults);
+
+echo "--------------------DESCRIPTION RESULTS--------------------\n";
+
+if ($descriptionNumRows < 1) {
+	echo "No results found.\n\n";
+} else {
+	echo "Number of results: " . $descriptionNumRows . "\n\n";
+
+	while ($records = mysqli_fetch_array($descriptionResults)){
+		$sfx_id = $records['sfx_id'];
+		$cd_name = $records['cd_name'];
+		$cd_track = $records['cd_track'];
+		$cd_track_index = $records['cd_track_index'];
+		$title = $records['title'];
+		$genre1 = $records['genre1'];
+		$genre2 = $records['genre2'];
+		$genre3 = $records['genre3'];
+		$description = $records['description'];
+		$length = $records['length'];
+		$location = $records['location'];
+		$license_id = $records['license_id'];
+		
+		echo "SFX ID: $sfx_id \t CD: $cd_name \t CD Track: $cd_track \t CD Track Index: $cd_track_index \n";
+		echo "Title: $title \n";
+		echo "Genres: $genre1 \t $genre2 \t $genre3 \n";
+		echo "Description: $description \n";
+		echo "Length: $length \t Location: /$location \n\n";
+	}
+}
 mysqli_close($mysqli);
 ?>
