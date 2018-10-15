@@ -7,8 +7,8 @@
  * 
  *  soundsearch.php
  * 
- *  v0.1
- *  20 June 2018
+ *  v0.2
+ *  1 October 2018
  *  Zachary Kascak
  */
 
