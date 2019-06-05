@@ -7,9 +7,9 @@
  * 
  *  soundsearch.php
  * 
- *  v0.2.1
- *  16 October 2018
- *  Zachary Kascak
+ *  v0.2.2
+ *  31 May 2019
+ * 	Ryan Kraynak
  */
 
 $mysqli = new mysqli("ip.address.com", "username", "password", "sound_library");
@@ -82,12 +82,11 @@ function searchResults($numOfRows, $searchResults){
                 	$length = $records['length'];
 	                $location = $records['location'];
         	        $license_id = $records['license_id'];
-
 	                echo "SFX ID: $sfx_id \t CD: $cd_name \t CD Track: $cd_track \t CD Track Index: $cd_track_index \n";
         	        echo "Title: $title \n";
                 	echo "Genres: $genre1 \t $genre2 \t $genre3 \n";
 	                echo "Description: $description \n";
-        	        echo "Length: $length \t Location: /$location \n\n";
+					echo "Length: $length \t Location: /$location \n\n";
 		}
         }
 }
