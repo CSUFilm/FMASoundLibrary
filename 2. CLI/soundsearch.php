@@ -12,7 +12,6 @@
  * 	Ryan Kraynak
  */
 
-$mysqli = new mysqli("ip.address.com", "username", "password", "sound_library");
 
 if (mysqli_connect_errno()) {
 	printf("connection failed: %s\n", mysqli_connect_error());
@@ -63,7 +62,7 @@ searchResults($descriptionNumRows, $descriptionResults);
 
 mysqli_close($mysqli);
 
-function searchResults($numOfRows, $searchResults){
+
 	if ($numOfRows < 1) {
         	echo "No results found.\n\n";
 	} else {
