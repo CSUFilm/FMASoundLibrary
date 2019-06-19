@@ -6,10 +6,10 @@
  *  Sound Library Search Tool
  * 
  *  soundsearch.php
- * 
- *  v0.2.2
+ *
+ *  v0.2.3
  *  31 May 2019
- * 	Ryan Kraynak
+ * 	Zak Kascak & Ryan Kraynak
  */
 
 
@@ -81,12 +81,9 @@ mysqli_close($mysqli);
                 	$length = $records['length'];
 	                $location = $records['location'];
         	        $license_id = $records['license_id'];
-	                echo "SFX ID: $sfx_id \t CD: $cd_name \t CD Track: $cd_track \t CD Track Index: $cd_track_index \n";
-        	        echo "Title: $title \n";
-                	echo "Genres: $genre1 \t $genre2 \t $genre3 \n";
-	                echo "Description: $description \n";
-					echo "Length: $length \t Location: /$location \n\n";
+					$displayblock = "SFX ID: $sfx_id CD: $cd_name CD Track: $cd_track CD Track Index: $cd_track_index Title: $title Genres: $genre1: $genre2: $genre3: Description: $descriptionLength: $lengthLocation: $location";
 		}
         }
 }
+	echo $displayblock;
 ?>
