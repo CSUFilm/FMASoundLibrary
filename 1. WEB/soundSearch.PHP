@@ -1,5 +1,5 @@
 <?php
-<!--
+/*
  *  Cleveland State University
  *  School of Film and Media Arts
  *
@@ -8,9 +8,9 @@
  *  index.php
  *
  *  verison 0.3.0
- *  14 June 2019
- *  Ryan Kraynak
--->
+ *  24 June 2019
+ *  Ryan Kraynak & Zachary Kascak
+ */
 
 /*--- Establish Connection ---*/
     require 'config.php';
@@ -24,7 +24,7 @@
         $displayBlock = "connected to server" . mysqli_connect() . "<br>";
     }
 
-function searchResults($numOfRows, $searchResults){
+/*function searchResults($numOfRows, $searchResults){
     if ($numOfRows < 1) {
         echo "No results found.\n\n";
     } else {
@@ -53,7 +53,7 @@ function searchResults($numOfRows, $searchResults){
                     }
             }
         }
-    }
+    }*/
 
 
 ?>
@@ -69,5 +69,6 @@ function searchResults($numOfRows, $searchResults){
             <button type="$submit" name="luckySearch">I'm feeling lucky</button>
         </form>
         <h1>Your Search Results</h1>
+        <?php echo $displayBlock ?>
     </body>
 </html>

@@ -8,20 +8,25 @@
  *  soundsearch.php
  *
  *  v0.2.3
- *  31 May 2019
+ *  24 June 2019
  * 	Zak Kascak & Ryan Kraynak
  */
 
+ require "config.php";
+
+$displayBlock = "";
 
 if (mysqli_connect_errno()) {
-	printf("connection failed: %s\n", mysqli_connect_error());
+	$displayBlock = "connection failed";
+	echo '$displayBlock';
+	//printf("connection failed: %s\n", mysqli_connect_error());
 	exit();
 } else {
 	echo "CONNECTED\n";
     printf("host information: %s\n\n", mysqli_get_host_info($mysqli));
 }
 
-$in = fopen('php://stdin', 'r');
+/*$in = fopen('php://stdin', 'r');
 echo "Enter Search Query:";
 
 $searchText = fgets($in, 250);
@@ -84,6 +89,5 @@ mysqli_close($mysqli);
 					$displayblock = "SFX ID: $sfx_id CD: $cd_name CD Track: $cd_track CD Track Index: $cd_track_index Title: $title Genres: $genre1: $genre2: $genre3: Description: $descriptionLength: $lengthLocation: $location";
 		}
         }
-}
-	echo $displayblock;
+}*/
 ?>
