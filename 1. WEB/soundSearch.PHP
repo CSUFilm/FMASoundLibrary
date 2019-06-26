@@ -1,4 +1,4 @@
-<?php
+<td><?php
 <!--
  *  Cleveland State University
  *  School of Film and Media Arts
@@ -24,6 +24,28 @@
         $displayBlock = "connected to server" . mysqli_connect() . "<br>";
     }
 
+    $displayBlock =
+    "<table>
+      <tr>
+        <td>$sfx_id</td>
+        <td>$cd_name</td>
+        <td>$cd_track</td>
+        <td>$cd_track_index</td>
+      </tr>
+      <tr>
+        <td>$genre1</td>
+        <td>$genre2</td>
+        <td>$genre3</td>
+      </tr>
+      <tr>
+        <td>$description</td>
+      </tr>
+      <tr>
+        <td>$length</td>
+        <td>$location</td>
+      </tr>
+    </table>";"
+
 function searchResults($numOfRows, $searchResults){
     if ($numOfRows < 1) {
         echo "No results found.\n\n";
@@ -43,19 +65,10 @@ function searchResults($numOfRows, $searchResults){
                         $length = $records['length'];
                         $location = $records['location'];
                         $license_id = $records['license_id'];
-
-                        //Our Display block
-                        echo "Title: $title \n";
-                        echo "SFX ID: $sfx_id \t CD: $cd_name \t CD Track: $cd_track \t CD Track Index: $cd_track_index \n";
-                        echo "Genres: $genre1 \t $genre2 \t $genre3 \n";
-                        echo "Description: $description \n";
-                        echo "Length: $length \t Location: /$location \n\n";
                     }
             }
         }
     }
-
-
 ?>
 <!DOCTYPE html>
     <title>CSUFMAsoundSearch</title>
@@ -69,5 +82,8 @@ function searchResults($numOfRows, $searchResults){
             <button type="$submit" name="luckySearch">I'm feeling lucky</button>
         </form>
         <h1>Your Search Results</h1>
+        <?php
+        echo $displayBlock;
+        ?>
     </body>
 </html>
