@@ -63,27 +63,27 @@ searchResults($descriptionNumRows, $descriptionResults);
 mysqli_close($mysqli);
 
 
+function searchResults($numOfRows, $searchResults) {
 	if ($numOfRows < 1) {
-        	echo "No results found.\n\n";
+        echo "No results found.\n\n";
 	} else {
-        	echo "Number of results: " . $numOfRows . "\n\n";
-
-        	while ($records = mysqli_fetch_array($searchResults)){
-                	$sfx_id = $records['sfx_id'];
-	                $cd_name = $records['cd_name'];
-        	        $cd_track = $records['cd_track'];
-                	$cd_track_index = $records['cd_track_index'];
-	                $title = $records['title'];
-        	        $genre1 = $records['genre1'];
-                	$genre2 = $records['genre2'];
-	                $genre3 = $records['genre3'];
-        	        $description = $records['description'];
-                	$length = $records['length'];
-	                $location = $records['location'];
-        	        $license_id = $records['license_id'];
-					$displayblock = "SFX ID: $sfx_id CD: $cd_name CD Track: $cd_track CD Track Index: $cd_track_index Title: $title Genres: $genre1: $genre2: $genre3: Description: $descriptionLength: $lengthLocation: $location";
+        echo "Number of results: " . $numOfRows . "\n\n";
+        while ($records = mysqli_fetch_array($searchResults)){
+            	$sfx_id = $records['sfx_id'];
+	            $cd_name = $records['cd_name'];
+                $cd_track = $records['cd_track'];
+            	$cd_track_index = $records['cd_track_index'];
+	            $title = $records['title'];
+                $genre1 = $records['genre1'];
+            	$genre2 = $records['genre2'];
+	            $genre3 = $records['genre3'];
+                $description = $records['description'];
+            	$length = $records['length'];
+	            $location = $records['location'];
+                $license_id = $records['license_id'];
+				$displayblock = "SFX ID: $sfx_id CD: $cd_name CD Track: $cd_track CDTrack Index: $cd_track_index Title: $title Genres: $genre1: $genre2:$genre3: Description: $descriptionLength: $lengthLocation: $location";
 		}
-        }
+	}
 }
 	echo $displayblock;
 ?>
