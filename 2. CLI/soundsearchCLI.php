@@ -12,6 +12,7 @@
  * 	Zak Kascak & Ryan Kraynak
  */
 
+ require "config.php";
 
 if (mysqli_connect_errno()) {
 	printf("connection failed: %s\n", mysqli_connect_error());
@@ -85,5 +86,5 @@ function searchResults($numOfRows, $searchResults) {
 		}
 	}
 }
-	echo $displayblock;
+
 ?>

@@ -1,129 +1,135 @@
 <?php
 /*
  *  Cleveland State University
- *  School of Film and Media Arts
+ *  School of Film & Media Arts
  *
  *  Sound Library Search Tool
  *
- *  index.php
+ *  soundSearch.php
  *
- *  verison 0.3.0
- *  14 June 2019
- *  Ryan Kraynak
+ *  verison 0.3.2
+ *  16 July 2019
+ *  Zachary Kascak & Ryan Kraynak
  */
 
-//--- Establish Connection ---
-require 'config.php';
+// Required Scripts
+require "config.php";
 
-$displayBlock = "version 1
-<br>
-<br>";
+// Variable Declaration
+$displayBlock = "";
+$searchText = $_POST['searchText'];
+$regSearch = $_POST['regSearch'];
+$luckySearch = $_POST['luckySearch'];
 
-if (mysqli_connect_errno()) {
+// Establish connection to MySQL
+/*if (mysqli_connect_errno()) 
+{
     $displayBlock .= "could not connect to server error number;" .mysqli_connect_errno();
-} else {
-    echo "CONNECTED\n";
+    mysqli_close($mysqli);
+}
+else 
+{
     $displayBlock .= "connected to server" . mysqli_connect() . "<br>";
-}
+}*/
 
-
-// Variable Declarations
-$regSearch = $_POST["regSearch"];
-$luckySearch = $_POST["luckySearch"];
-$searchText = $_POST["searchText"];
-
-// Choose regular or lucky search      
-if ($regSearch == 1) {
+// Case Switch for Regular or Lucky
+if ($regSearch == 1) 
+{
     $displayBlock .= "
-    <br>
-    <br>
+    <br />
+    <br />
     Keyword: " . $searchText . "
-    <br>
-    <br>
-    <table>";
-    
-    $genre1Query = "SELECT * FROM sound_library.sfx WHERE genre1 LIKE ('".$searchText."')";
-    $genre1Results = mysqli_query($mysqli, $genre1Query);
-    /*
-    $genre1Results = mysqli_query($mysqli, "SELECT * FROM sfx WHERE genre1 LIKE '%$searchText%';");*/
-    $genre1NumRows = mysqli_num_rows($genre1Results);
-    $displayBlock .= searchResults($genre1NumRows, $genre1Results);
-    $genre2Results = mysqli_query($mysqli, "SELECT * FROM sfx WHERE genre2 LIKE '%$searchText%';");
-    $displayBlock .= searchResults($genre2NumRows, $genre2Results);
-    $genre3Results = mysqli_query($mysqli, "SELECT * FROM sfx WHERE genre3 LIKE '%$searchText%';");
-    $displayBlock .= searchResults($genre3NumRows, $genre3Results);
-} else {
-    $displayBlock .= "Error";
+    <br />";
+
+    // Query and display results
+    $genre1SelectResults = mysqli_query($mysqli, "SELECT * FROM sound_library.sfx WHERE genre1 LIKE '%$searchText%';");
+    $genre1SelectNumRows = mysqli_num_rows($genre1SelectResults);
+    $displayBlock .= "
+    <h3>Genre 1 Results:</h3>" . searchResults($genre1SelectNumRows, $genre1SelectResults);
+    $genre2SelectResults = mysqli_query($mysqli, "SELECT * FROM sound_library.sfx WHERE genre2 LIKE '%$searchText%';");
+    $genre2SelectNumRows = mysqli_num_rows($genre2SelectResults);
+    $displayBlock .= "
+    <br />
+    <br />
+    <h3>Genre 2 Results:</h3>" . searchResults($genre2SelectNumRows, $genre2SelectResults);
+    $genre3SelectResults = mysqli_query($mysqli, "SELECT * FROM sound_library.sfx WHERE genre3 LIKE '%$searchText%';");
+    $genre3SelectNumRows = mysqli_num_rows($genre3SelectResults);
+    $displayBlock .= "
+    <br />
+    <br />
+    <h3>Genre 3 Results:</h3>" . searchResults($genre3SelectNumRows, $genre3SelectResults);
+    $descriptionSelectResults = mysqli_query($mysqli, "SELECT * FROM sound_library.sfx WHERE description LIKE '%$searchText%';");
+    $descriptionSelectNumRows = mysqli_num_rows($descriptionSelectResults);
+    $displayBlock .= "
+    <br />
+    <br />
+    <h3>Description Results:</h3>" . searchResults($descriptionSelectNumRows, $descriptionSelectResults);
+} 
+else 
+{
+    $displayBlock .= "ERROR";
 }
 
-function searchResults($numOfRows, $searchResults){
+// Functions
+function searchResults($numOfRows, $searchResults)
+{
+    // Declare function variables
     $searchResultBlock = "";
 
-    if ($numOfRows < 1) {
+    //Test number of rows
+    if ($numOfRows < 1)
+    {
         $searchResultBlock .= "
-        <tr>
-            <td>No results found</td>
-        </tr>";
+        No Results Found
+        <br />";
         return $searchResultBlock;
-    } else {
-        echo "Number of results:" . $numOfRows . "\n\n";
-        //Our Pulls
-        while ($records = mysqli_fetch_array($searchResults)){
-            $sfx_id = $records['sfx_id'];
-            $cd_name = $records['cd_name'];
-            $cd_track = $records['cd_track'];
-            $cd_track_index = $records['cd_track_index'];
-            $title = $records['title'];
-            $genre1 = $records['genre1'];
-            $genre2 = $records['genre2'];
-            $genre3 = $records['genre3'];
-            $description = $records['description'];
-            $length = $records['length'];
-            $location = $records['location'];
-            $license_id = $records['license_id'];
+    }
+    else
+    {
+        $searchResultBlock .= "
+        <table>";
 
-            $resultFormatingBlock =
-            " <tr>
-                <td>".$sfx_id."</td>
-                <td>".$cd_name."</td>
-                <td>".$cd_track."</td>
-                <td>".$cd_track_index."</td>
-              </tr>
-              <tr>
-                <td>".$genre1."</td>
-                <td>".$genre2."</td>
-                <td>".$genre3."</td>
-              </tr>
-              <tr>
-                <td>".$description."</td>
-              </tr>
-              <tr>
-                <td>".$length."</td>
-                <td>".$location."</td>
-              </tr>";
-        
-            $searchResultBlock .= $resultFormatingBlock;
+        while ($records = mysqli_fetch_array($searchResults)) 
+        {
+            $searchResultBlock .= "
+            <tr height=\"15\">
+            </tr>
+            <tr>
+              <td><b>SFX ID: </b></td><td>" . $records['sfx_id'] . "</td><td><b>CD Name:</b></td><td>" . $records['cd_name'] . "</td><td><b>Track:</b></td><td>" . $records['cd_track'] . "</td><td><b>Track Index:</b></td><td>" . $records['cd_track_index'] . "</td><td></td>
+            </tr>
+            <tr>
+              <td><b>Genre 1: </b></td><td colspan=\"2\">" . $records['genre1'] . "</td><td><b>Genre 2: </b></td><td colspan=\"2\">" . $records['genre2'] . "</td><td><b>Genre 3: </b></td><td colspan=\"2\">" . $records['genre3'] . "</td>
+            </tr>
+            <tr>
+              <td><b>Description: </b></td><td colspan=\"8\">" . $records['description'] . "</td>
+            </tr>
+            <tr>
+              <td><b>Location: </b></td><td colspan=\"8\">" . $records['location'] . "</td>
+            </tr>";
         }
+
+        $searchResultBlock .= "
+        </table>";
 
         return $searchResultBlock;
     }
 }
-
 ?>
 <!DOCTYPE html>
-    <title>CSUFMAsoundSearch</title>
-        <html>
-        <head>
-        </head>
+<html>
+    <head>
+        <title>FMA Sound Library</title>
+    </head>
     <body>
+        <h1 style="text-align: center">FMA Sound Library</h1>
         <form action="soundSearch.php" method="post">
             <input type="text" name="searchText" placeholder="what do you want to hear?">
             <button type="submit" name="regSearch" value="1">Submit</button>
-            <!--<button type="submit" name="luckySearch" value="1">I'm feeling lucky</button>-->
+            <!--<button type="submit" name="luckySearch" value="1">I'm feeling lucky</  button>-->
         </form>
-        <h1>Your Search Results</h1>
+        <h2>Your Search Results</h2>
         <?php
-        echo $displayBlock;
+            echo $displayBlock;
         ?>
     </body>
 </html>
